@@ -1,4 +1,4 @@
-import prismadb from "@/lib/prsimadb";
+import prismadb from "@/lib/prismadb";
 import { SizeClient } from "./components/client";
 import { SizeColumn } from "./components/columns";
 import { format } from "date-fns";
