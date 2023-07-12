@@ -1,12 +1,13 @@
-import { getSalesCount } from "@/actions/getSalesCount";
-import { getStockProduct } from "@/actions/getStockProduct";
-import { getTotalRenvenue } from "@/actions/getTotalRenvenue";
-import { Heading } from "@/components/ui/Heading";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import prismadb from "@/lib/prismadb";
-import { formatter } from "@/lib/utils";
-import { CreditCard, DollarSign, Package } from "lucide-react";
+import { getGraphRenvenue } from '@/actions/getGraphRenvenue';
+import { getSalesCount } from '@/actions/getSalesCount';
+import { getStockProduct } from '@/actions/getStockProduct';
+import { getTotalRenvenue } from '@/actions/getTotalRenvenue';
+import { Heading } from '@/components/ui/Heading';
+import Overview from '@/components/ui/Overview';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { formatter } from '@/lib/utils';
+import { CreditCard, DollarSign, Package } from 'lucide-react';
 
 interface DashbordPageProps {
   params: { storeId: string };
@@ -15,7 +16,8 @@ const DashboardPage: React.FC<DashbordPageProps> = async ({ params }) => {
   const totalRenvenue = await getTotalRenvenue(params.storeId);
   const salesCount = await getSalesCount(params.storeId);
   const stockCount = await getStockProduct(params.storeId);
-
+  const paidOrders = await getGraphRenvenue(params.storeId);
+  //console.log(paidOrders);
   return (
     <div className='flex-col'>
       <div className='flex-1 space-y-4 p-8 pt-6'>
@@ -67,6 +69,14 @@ const DashboardPage: React.FC<DashbordPageProps> = async ({ params }) => {
             </CardContent>
           </Card>
         </div>
+        <Card className='col-span-4'>
+          <CardHeader>
+            <CardTitle>Resumo</CardTitle>
+          </CardHeader>
+          <CardContent className='pl-2'>
+            <Overview data={paidOrders} />
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

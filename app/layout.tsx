@@ -1,16 +1,17 @@
-import { Nunito } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
+import { Nunito } from 'next/font/google';
+import { ClerkProvider } from '@clerk/nextjs';
 
-import { ToasterProvider } from "@/providers/toast-provider";
-import { ModalProvider } from "@/providers/modal-provider";
+import { ToasterProvider } from '@/providers/toast-provider';
+import { ModalProvider } from '@/providers/modal-provider';
 
-import "./globals.css";
+import './globals.css';
+import { ThemeProvider } from '@/providers/theme-provider';
 
-const nunito = Nunito({ subsets: ["latin"] });
+const nunito = Nunito({ subsets: ['latin'] });
 
 export const metadata = {
-  title: "Admin Dashboard",
-  description: "Created by zeta",
+  title: 'Admin Dashboard',
+  description: 'Created by zeta',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -18,9 +19,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <ClerkProvider>
       <html lang='pt-BR'>
         <body className={nunito.className}>
-          <ToasterProvider />
-          <ModalProvider />
-          {children}
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='system'
+            enableSystem
+          >
+            <ToasterProvider />
+            <ModalProvider />
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
